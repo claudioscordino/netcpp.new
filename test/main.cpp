@@ -36,6 +36,9 @@
 #include "logger.hpp"
 
 #include "tcp_ip.hpp"
+#include "udp_ip.hpp"
+#include "stream_local.hpp"
+#include "dgram_local.hpp"
 
 
 void do_server()
