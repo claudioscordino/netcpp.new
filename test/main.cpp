@@ -45,10 +45,12 @@ void do_server()
 {
 	DEBUG("SERVER: Creating address...");
 	DEBUG("SERVER: Creating server...");
-	net::ip::tcp::server srv ("1234");
+// 	net::ip::tcp::server srv ("1234");
+	net::local::stream::server srv ("/tmp/test-local");
 
 	DEBUG("SERVER: Creating server2...");
-	net::ip::tcp::server srv2(srv);
+// 	 net::ip::tcp::server srv2(srv);
+	net::local::stream::server srv2(srv);
 
 	// sleep
 // 	std::this_thread::sleep_for(std::chrono::seconds(2));
@@ -72,7 +74,8 @@ void do_client()
 	std::this_thread::sleep_for(std::chrono::seconds(2));
 
 	DEBUG("CLIENT: Creating client...");
-	net::ip::tcp::client clt ("127.0.0.1", "1234");
+// 	net::ip::tcp::client clt ("127.0.0.1", "1234");
+	net::local::stream::client clt ("/tmp/test-local");
 	DEBUG("CLIENT: Opening client...");
 
 	while (true){
