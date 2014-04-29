@@ -1,0 +1,18 @@
+# ignore objects, anywhere in the tree.
+*.o
+*.swp
+*.so
+*.a
+*.old
+*.rej
+*.log
+*.swo
+*.pptx
+
+.cproject
+.project
+.settings/
+doc/html/
+
+
+
