@@ -62,7 +62,7 @@
 /**
  * @brief Macro to set the file used for logging.
  *
- * @param Base name of the file used for logging (e.g. "/tmp/myproject")
+ * @param Base name of the file used for logging (e.g., "/tmp/myproject")
  *
  * Example of configuration of the Logger: *
  * \code
@@ -74,7 +74,7 @@
 	}
 
 /**
- * \brief Macro to print error messages.
+ * @brief Macro to print error messages.
  *
  * Example of usage:
  * \code
@@ -113,7 +113,7 @@
 
 
 /**
- * \brief Macro to print warning messages.
+ * @brief Macro to print warning messages.
  *
  * Example of usage:
  * \code
@@ -153,7 +153,7 @@
 
 
 /**
- * \brief Macro to print debug messages.
+ * @brief Macro to print debug messages.
  *
  * Example of usage:
  * \code

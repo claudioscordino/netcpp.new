@@ -42,28 +42,27 @@ namespace net {
 namespace ip {
 namespace tcp {
 
+/**
+ * @brief Socket class for TCP/IP communications.
+ */
 class socket: public PosixSocket {
 
 public:
-	/**
-	 * @brief Constructor: opens socket
-	 */
 	socket(): PosixSocket(AF_INET, SOCK_STREAM, 0){}
 };
 
 
 
-
-
 /**
- * @brief Server for IPv4 TCP communications.
+ * @brief Server for TCP/IP communications.
  */
 class server: public socket {
 public:
 	/**
 	 * @brief Constructor
 	 *
-	 * This constructor allocates a concrete class derived from socket.
+	 * It calls bind() + listen().
+	 * @param port Port used by the server for accepting connections.
 	 */
 	server(const std::string& port) {
 			bind(port);
@@ -74,7 +73,8 @@ public:
 	/**
 	 * @brief Constructor
 	 *
-	 * This constructor allocates a concrete class derived from socket.
+	 * It calls bind() + listen().
+	 * @param port Port used by the server for accepting connections.
 	 * @param max_pending_connections Number of maximum allowed pending connections
 	 */
 	server(const std::string& port, int max_pending_connections) {
@@ -84,20 +84,21 @@ public:
 
 
 	/**
-	 * @brief Constructor to accept() a TCP connection on an existing socket.
+	 * @brief Constructor to accept() a TCP/IP connection on an existing socket.
 	 *
-	 * This constructor allocates a class derived from socket and accept a TCP connection on the given (existing) TCP socket.
-	 * @param srv Existing TCP socket on which the new connection must be accepted.
+	 * It calls accept().
+	 * @param srv Existing TCP/IP socket on which the new connection must be accepted.
 	 */
 	server(const server& srv){
 			accept(srv);
 	}
 
+private:
+
 	/**
 	 * @brief Method to accept() a connection on the socket.
 	 *
 	 * This method calls accept().
-	 * This method is usually invoked on the server-side for stream communications.
 	 * @param srv Socket on which the new connection must be accepted.
 	 * @exception runtime_error in case of error in accept()
 	 */
@@ -111,11 +112,10 @@ public:
 
 
 	/**
-	 * @brief Listen operation
+	 * @brief Set the maximum number of pending connections.
 	 *
-	 * This method calls listen() and allows to specify the number
+	 * This method allows to specify the number
 	 * of maximum allowed pending connections.
-	 * This method is usually invoked on the server-side.
 	 * @exception runtime_error in case of error in listen()
 	 */
 	inline void listen(int max_pending_connections) const{
@@ -127,11 +127,10 @@ public:
 	}
 
 	/**
-	 * @brief Method to bind() the socket to an address.
+	 * @brief Method to bind() the socket to a specific port.
 	 *
-	 * This method calls bind().
-	 * This method is usually invoked on the server-side.
-	 * @param addr Address which the socket must be bound to
+	 * This method sets the port used by the server to accept connections.
+	 * @param port Port used by the server for accepting connections.
 	 * @exception runtime_error in case of error in bind()
 	 */
 	inline void bind (const std::string& port)
@@ -152,16 +151,16 @@ public:
 
 
 /**
- * @brief Client for IPv4 TCP communications.
+ * @brief Client for TCP/IP communications.
  */
 class client: public socket {
 public:
 	/**
-	 * @brief Method to connect() the socket to an address.
+	 * @brief Constructor.
 	 *
-	 * This method calls connect().
-	 * This method is usually invoked on the client-side.
-	 * @param addr Address which the socket must be connected to
+	 * This constructor calls connect().
+	 * @param address Address which the socket must be connected to
+	 * @param port Port the socket must be connected to
 	 * @exception runtime_error in case of error in connect()
 	 */
 	client (const std::string& address, const std::string& port)
@@ -182,7 +181,6 @@ public:
 			throw std::runtime_error ("Client socket error");
 		}
 	}
-
 };
 
 }}} // net::ip::tcp

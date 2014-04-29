@@ -82,7 +82,7 @@ void do_client()
 
 int main()
 {
-	LOG_FILE("netcpp");
+	LOG_FILE("/tmp/netcpp-test");
 	DEBUG("Launching 1st thread...");
 	std::thread t1(do_server);
 	DEBUG("Launching 2nd thread...");

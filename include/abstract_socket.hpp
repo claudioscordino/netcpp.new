@@ -69,8 +69,8 @@ inline __buffer buffer(std::array<char, N>& buf)
  * @brief Base abstract class for sockets.
  *
  * This is the base abstract class for sockets. Any supported platform
- * must inherit from this class.
- * Sockets are opened at creation and closed at deletion.
+ * must inherit from this class, open the socket in the constructor,
+ * close the socket in the destructor and define sys_receive() and sys_send().
  */
 class AbstractSocket {
 public:
@@ -79,6 +79,9 @@ public:
 	 * @brief Platform-specific receive
 	 *
 	 * Derived classes must implement this platform-specific operation.
+	 * @param buffer Pointer to the buffer where received bytes must be stored
+	 * @param size Number of bytes to receive
+	 * @return The number of bytes actually received or -1 in case of error
 	 */
 	virtual int sys_receive(void* buffer, size_t size)=0;
 	
@@ -86,6 +89,9 @@ public:
 	 * @brief Platform-specific send
 	 *
 	 * Derived classes must implement this platform-specific operation.
+	 * @param buffer Pointer to the buffer containing bytes to be sent
+	 * @param size Number of bytes sent
+	 * @return The number of bytes actually sent or -1 in case of error
 	 */
 	virtual int sys_send(const void* buffer, size_t size)=0;
 
@@ -107,7 +113,7 @@ private:
 	 */
 	std::mutex lock_;
 
-	// XXX: missing condition variables and shared queue!
+	// FIXME: missing condition variables and shared queue!
 };
 
 } // net

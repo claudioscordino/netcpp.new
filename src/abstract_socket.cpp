@@ -104,10 +104,10 @@ int AbstractSocket::send (struct __buffer buf, std::size_t size)
 }
 
 /**
- * \brief Low-level receive
+ * \brief Lower-level receive
  *
- * This method is private because it is meant to be used through the other receive()
- * method.
+ * This method is private because it is meant to be used through the main
+ * receive() method.
  * Note: it can block the caller, because it continues receiving until the given
  * number of bytes have been received.
  * @param buffer Pointer to the buffer where received bytes must be stored
@@ -140,7 +140,7 @@ int AbstractSocket::do_receive (void* buffer, size_t size)
 /**
  * \brief Low-level send
  *
- * This method is private because it is meant to be used through the other
+ * This method is private because it is meant to be used through the main
  * send() method.
  * Note: it can block the caller, because it continues writing until the
  * given number of bytes have been written.

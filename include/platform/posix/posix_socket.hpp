@@ -31,6 +31,10 @@
 
 #include <unistd.h>
 
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <unistd.h>
+
 #include "abstract_socket.hpp"
 
 namespace net {
@@ -44,7 +48,7 @@ class PosixSocket: public AbstractSocket {
 
 public:
 	/**
-	 * @brief Destructor: closes socket
+	 * @brief Destructor: closes socket and resets the file descriptor.
 	 */
 	virtual ~PosixSocket(){
 		::close(fd_);
@@ -52,22 +56,22 @@ public:
 	}
 	
 	/**
-	 * \brief Low-level read
+	 * @brief Platform-specific (i.e., Posix) receive
 	 *
-	 * @param buffer Pointer to the buffer where read bytes must be stored
-	 * @param size Number of bytes to be read
-	 * @return The number of actually read bytes or -1 in case of error
+	 * @param buffer Pointer to the buffer where received bytes must be stored
+	 * @param size Number of bytes to receive
+	 * @return The number of bytes actually received or -1 in case of error
 	 */
 	virtual int  sys_receive(void* buffer, size_t size){
 		return ::read(fd_, buffer , size);
 	}
 
 	/**
-	 * \brief Low-level write
+	 * @brief Platform-specific (i.e., Posix) send
 	 *
-	 * @param buffer Pointer to the buffer containing bytes to be written
-	 * @param size Number of bytes to be written
-	 * @return The number of actually written bytes or -1 in case of error
+	 * @param buffer Pointer to the buffer containing bytes to be sent
+	 * @param size Number of bytes sent
+	 * @return The number of bytes actually sent or -1 in case of error
 	 */
 	virtual int  sys_send(const void* buffer, size_t size){
 		return ::write(fd_, buffer, size);
@@ -75,6 +79,19 @@ public:
 
 protected:
 
+	/**
+	 * @brief Constructor. It calls socket().
+	 *
+	 * It is protected because this class is meant to be allocated only
+	 * through the derived classes.
+	 * @param domain the communication domain; examples are
+	 * AF_INET for IPv4 and AF_LOCAL for local communications.
+	 * @param type the communication semantics; examples are
+	 * SOCK_STREAM for connection-oriented communications and
+	 * SOCK_DGRAM for connection-less communcations
+	 * @param protocol specifies a particular protocol to be used with the
+	 * socket
+	 */
 	PosixSocket(int domain, int type, int protocol) {
 		fd_ = socket(domain, type, protocol);
 		if (fd_ < 0) {
@@ -93,6 +110,7 @@ protected:
 	int fd_;
 
 private:
+	/// Disable default constructor:
 	PosixSocket();
 };
 

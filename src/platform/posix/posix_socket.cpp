@@ -26,19 +26,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/un.h>
-#include <stdexcept>
-#include <strings.h>
-#include <cstring>
-#include <netinet/in.h>
-#include <netinet/ip.h>
-#include <arpa/inet.h>
-
-#include "logger.hpp"
-#include "tcp_ip.hpp"
+#include "posix_socket.hpp"
 
 
 
