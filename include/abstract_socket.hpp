@@ -45,7 +45,7 @@ namespace net {
  * to AbstractSocket. It is not meant to be directly used by the user.
  * The user must only use buffer(...).
  */
-struct __buffer {
+struct buff {
 	/// Pointer to data in memory
 	void* ptr_;
 
@@ -57,12 +57,12 @@ struct __buffer {
  * @brief Function to pass a std::array to AbstractSocket
  *
  * @param reference to a std::array<char>
- * @return a __buffer structure
+ * @return a buff structure
  */
 template<std::size_t N>
-inline __buffer buffer(std::array<char, N>& buf)
+inline buff buffer(std::array<char, N>& buf)
 {
-	return __buffer {reinterpret_cast<void*>(buf.data()), buf.size()};
+	return buff {reinterpret_cast<void*>(buf.data()), buf.size()};
 }
 
 /**
@@ -95,8 +95,8 @@ public:
 	 */
 	virtual int sys_send(const void* buffer, size_t size)=0;
 
-	int receive (__buffer buf, std::size_t size);
-	int send (__buffer buf, std::size_t size);
+	int receive (buff buf, std::size_t size);
+	int send (buff buf, std::size_t size);
 
 private:
 

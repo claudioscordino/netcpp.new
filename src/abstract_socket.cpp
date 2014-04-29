@@ -48,7 +48,7 @@ namespace net {
  * 		AbstractSocket::receive(net::buffer(b), 3);
  * </code>
  */
-int AbstractSocket::receive (struct __buffer buf, std::size_t size)
+int AbstractSocket::receive (struct buff buf, std::size_t size)
 {
 	int ret = 0;
 	if (buf.size_ == 0 || size > buf.size_){
@@ -84,7 +84,7 @@ int AbstractSocket::receive (struct __buffer buf, std::size_t size)
  * 		AbstractSocket::send(net::buffer(b), 3);
  * </code>
  */
-int AbstractSocket::send (struct __buffer buf, std::size_t size)
+int AbstractSocket::send (struct buff buf, std::size_t size)
 {
 	int ret = 0;
 	if (buf.size_ == 0 || size > buf.size_){
